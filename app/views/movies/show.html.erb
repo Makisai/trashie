@@ -1,0 +1,14 @@
+<%= link_to "Back", movies_path %>
+
+<section class="movie">
+    <%= image_tag @movie.featured_image if @movie.featured_image.attached? %>
+
+    <section class="movie-info">
+        <% cache @movie do%>
+            <h1><%= @movie.name %></h1>
+            <%= @movie.description %>   
+        <% end %>
+
+        <%= link_to "Edit", edit_movie_path(@movie) %>
+    </section>
+</section>
