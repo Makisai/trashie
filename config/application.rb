@@ -25,5 +25,14 @@ module Trashie
     # config.eager_load_paths << Rails.root.join("extras")
     config.active_job.queue_adapter = :solid_queue
     config.solid_queue.connects_to = { database: { writing: :queue } }
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins 'http://localhost:5173'
+        resource '*',
+                 headers: :any,
+                 methods: [:get, :post, :put, :patch, :delete, :options, :head]
+      end
+    end
   end
 end
