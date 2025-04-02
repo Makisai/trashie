@@ -8,6 +8,7 @@ class MoviesController < ApplicationController
   end
 
   def show
+    render json: @movie
   end
 
   def new
