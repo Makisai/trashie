@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_17_162911) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_04_184608) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -53,6 +53,22 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_17_162911) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "imdb_rating"
+    t.text "description"
+    t.datetime "watched_at"
+    t.string "trailer_url"
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.integer "movie_id", null: false
+    t.integer "user_id", null: false
+    t.float "rating", null: false
+    t.string "emoji"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["movie_id", "user_id", "created_at"], name: "index_ratings_on_movie_id_and_user_id_and_created_at"
+    t.index ["movie_id"], name: "index_ratings_on_movie_id"
+    t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -74,5 +90,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_17_162911) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "ratings", "movies"
+  add_foreign_key "ratings", "users"
   add_foreign_key "sessions", "users"
 end
