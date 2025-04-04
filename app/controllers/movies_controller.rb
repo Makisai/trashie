@@ -11,16 +11,12 @@ class MoviesController < ApplicationController
     render json: @movie
   end
 
-  def new
-    @movie = Movie.new
-  end
-
   def create
-    @movie = Movie.new(movie_params)
-    if @movie.save
-      redirect_to @movie
+    movie = Movie.new(movie_params)
+    if movie.save
+      render json: movie, status: :created
     else
-      render :new, status: :unprocessable_entity
+      render json: { errors: movie.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
